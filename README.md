@@ -12,26 +12,40 @@ De tool rekent af met handmatig, repetitief invulwerk: het splitst lange routes 
 * **Headless Automatisering**: Via Playwright navigeert de applicatie onzichtbaar door de ExtJS (GXT) omgeving van SPIN, accepteert het vereiste pop-ups (bijv. maximale lengte-waarschuwingen) en vult het alle wegzijdes, km-waardes en instellingen perfect in.
 * **Lokale Geheugenopslag**: Gebruikersinstellingen en wachtwoorden blijven lokaal bewaard in een `user_settings.json` bestand voor supersnel hergebruik.
 
-## 🚀 Installatie & Gebruik (Docker)
+## 🐳 Installatie via Docker (Makkelijkste methode)
 
-Veruit de eenvoudigste en meest schone manier om SPIN Automator te draaien is via Docker. Alle browser-afhankelijkheden (Playwright) zitten al perfect geconfigureerd in de container.
+Je hebt de broncode niet eens lokaal nodig! Je kunt SPIN Automator direct vanaf GitHub bouwen en draaien met één simpel configuratiebestandje. Dit is de schoonste en meest robuuste methode.
 
 ### Vereisten
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) geïnstalleerd en draaiend op je computer.
 
-### Starten
+### Stappenplan
 
-1. Kloon of download deze repository.
-2. Open een terminal/command prompt in de map.
-3. Voer het volgende commando uit:
+1. Maak ergens op je computer een lege map aan (bijvoorbeeld `SPIN`).
+2. Maak in deze map een tekstbestand aan genaamd `docker-compose.yml` en plak daar exact deze code in:
 
-```bash
-docker-compose up --build
+```yaml
+version: '3.8'
+
+services:
+  spin-automator:
+    container_name: spin-automator
+    build: https://github.com/DeRoelO/Spin-automator.git#main
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
 ```
 
-4. Ga in je webbrowser naar: `http://localhost:8501`
+3. Open een terminal (of command prompt) in die map.
+4. Voer het volgende commando uit om hem te downloaden, te bouwen en te starten:
 
-*(Tip: Stop de applicatie in de terminal met `CTRL+C` en gooi de container naderhand weg met `docker-compose down`)*
+```bash
+docker-compose up -d --build
+```
+
+5. Zodra hij klaar is met bouwen, open je je webbrowser en ga je naar: **http://localhost:8501**
+
+*(Tip: Wil je de applicatie updaten naar de nieuwste versie op GitHub? Voer simpelweg opnieuw `docker-compose up -d --build` uit!)*
 
 ## 🛠️ Installatie & Gebruik (Lokaal / Handmatig)
 
