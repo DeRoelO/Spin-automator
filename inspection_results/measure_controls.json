@@ -1,0 +1,794 @@
+[
+  {
+    "idx": 0,
+    "name": "",
+    "id": "x-auto-29-input",
+    "type": "text",
+    "value": "",
+    "visible": false,
+    "label": ""
+  },
+  {
+    "idx": 1,
+    "name": "bestekId",
+    "id": "x-auto-121-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Besteknummer: *"
+  },
+  {
+    "idx": 2,
+    "name": "bestekId-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "1967",
+    "visible": false,
+    "label": "Besteknummer: *"
+  },
+  {
+    "idx": 3,
+    "name": "id",
+    "id": "x-auto-122-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Maatregelnummer:"
+  },
+  {
+    "idx": 4,
+    "name": "start",
+    "id": "x-auto-123-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Start: *"
+  },
+  {
+    "idx": 5,
+    "name": "end",
+    "id": "x-auto-124-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Eind: *"
+  },
+  {
+    "idx": 6,
+    "name": "roadworkType",
+    "id": "x-auto-125-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegwerktype: *"
+  },
+  {
+    "idx": 7,
+    "name": "roadworkType-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "29",
+    "visible": false,
+    "label": "Wegwerktype: *"
+  },
+  {
+    "idx": 8,
+    "name": "managingDistrict",
+    "id": "x-auto-126-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegbeheerder:"
+  },
+  {
+    "idx": 9,
+    "name": "managingDistrict-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "161",
+    "visible": false,
+    "label": "Wegbeheerder:"
+  },
+  {
+    "idx": 10,
+    "name": "status",
+    "id": "x-auto-127-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Status:"
+  },
+  {
+    "idx": 11,
+    "name": "status-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "7",
+    "visible": false,
+    "label": "Status:"
+  },
+  {
+    "idx": 13,
+    "name": "gxt.RadioGroup.2",
+    "id": "x-auto-276",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Spoedreparatie: Ja \t Nee"
+  },
+  {
+    "idx": 14,
+    "name": "gxt.RadioGroup.2",
+    "id": "x-auto-278",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Spoedreparatie: Ja \t Nee"
+  },
+  {
+    "idx": 15,
+    "name": "location.fromRoadNumber",
+    "id": "x-auto-130-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegnummer: *"
+  },
+  {
+    "idx": 16,
+    "name": "location.fromRoadSide",
+    "id": "x-auto-131-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegzijde: *"
+  },
+  {
+    "idx": 17,
+    "name": "location.fromMeter",
+    "id": "x-auto-132-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Van km: *"
+  },
+  {
+    "idx": 18,
+    "name": "location.betweenName",
+    "id": "x-auto-133-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Van: *"
+  },
+  {
+    "idx": 19,
+    "name": "location.betweenName-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "Duitse grens",
+    "visible": false,
+    "label": "Van: *"
+  },
+  {
+    "idx": 20,
+    "name": "location.secondaryName",
+    "id": "x-auto-134-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Tussen: *"
+  },
+  {
+    "idx": 21,
+    "name": "location.secondaryName-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "Bergh Noord",
+    "visible": false,
+    "label": "Tussen: *"
+  },
+  {
+    "idx": 22,
+    "name": "location.toRoadNumber",
+    "id": "x-auto-135-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegnummer: *"
+  },
+  {
+    "idx": 23,
+    "name": "location.toRoadSide",
+    "id": "x-auto-136-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegzijde: *"
+  },
+  {
+    "idx": 24,
+    "name": "location.toMeter",
+    "id": "x-auto-137-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Tot km: *"
+  },
+  {
+    "idx": 25,
+    "name": "location.andName",
+    "id": "x-auto-138-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Naar: *"
+  },
+  {
+    "idx": 26,
+    "name": "location.andName-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "Arnhem",
+    "visible": false,
+    "label": "Naar: *"
+  },
+  {
+    "idx": 27,
+    "name": "location.primaryName",
+    "id": "x-auto-139-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "En: *"
+  },
+  {
+    "idx": 28,
+    "name": "location.primaryName-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "IJsselbrug",
+    "visible": false,
+    "label": "En: *"
+  },
+  {
+    "idx": 30,
+    "name": "trafficHindranceClass",
+    "id": "x-auto-141-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Verkeershinderklasse: *"
+  },
+  {
+    "idx": 31,
+    "name": "trafficHindranceClass-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "SPIN_HINDRANCE_CLASS_1",
+    "visible": false,
+    "label": "Verkeershinderklasse: *"
+  },
+  {
+    "idx": 32,
+    "name": "outsideWorkableHours",
+    "id": "x-auto-142-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Buiten werkbare uren:"
+  },
+  {
+    "idx": 33,
+    "name": "outsideWorkableHours-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "NO",
+    "visible": false,
+    "label": "Buiten werkbare uren:"
+  },
+  {
+    "idx": 34,
+    "name": "gxt.RadioGroup.3",
+    "id": "x-auto-352",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Weergevoelig: * Ja \t Nee"
+  },
+  {
+    "idx": 35,
+    "name": "gxt.RadioGroup.3",
+    "id": "x-auto-354",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Weergevoelig: * Ja \t Nee"
+  },
+  {
+    "idx": 36,
+    "name": "gxt.RadioGroup.4",
+    "id": "x-auto-357",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Reserveafzetting: Ja \t Nee"
+  },
+  {
+    "idx": 37,
+    "name": "gxt.RadioGroup.4",
+    "id": "x-auto-359",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Reserveafzetting: Ja \t Nee"
+  },
+  {
+    "idx": 38,
+    "name": "gxt.RadioGroup.5",
+    "id": "x-auto-337",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Snelheidslimiet: * Ja \t Nee"
+  },
+  {
+    "idx": 39,
+    "name": "gxt.RadioGroup.5",
+    "id": "x-auto-339",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Snelheidslimiet: * Ja \t Nee"
+  },
+  {
+    "idx": 40,
+    "name": "speedlimit",
+    "id": "x-auto-146-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 41,
+    "name": "speedlimit-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "",
+    "visible": false,
+    "label": ""
+  },
+  {
+    "idx": 42,
+    "name": "widthConstraint",
+    "id": "x-auto-149-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Breedte: *"
+  },
+  {
+    "idx": 43,
+    "name": "gxt.RadioGroup.6",
+    "id": "x-auto-371",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Hoogte: * Ja \t Nee"
+  },
+  {
+    "idx": 44,
+    "name": "gxt.RadioGroup.6",
+    "id": "x-auto-373",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Hoogte: * Ja \t Nee"
+  },
+  {
+    "idx": 45,
+    "name": "heightConstraint",
+    "id": "x-auto-152-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 46,
+    "name": "gxt.RadioGroup.7",
+    "id": "x-auto-383",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Lengte: * Ja \t Nee"
+  },
+  {
+    "idx": 47,
+    "name": "gxt.RadioGroup.7",
+    "id": "x-auto-385",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Lengte: * Ja \t Nee"
+  },
+  {
+    "idx": 48,
+    "name": "lengthConstraint",
+    "id": "x-auto-155-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 49,
+    "name": "roadblockType",
+    "id": "x-auto-157-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Afzetsysteem: *"
+  },
+  {
+    "idx": 50,
+    "name": "roadblockType-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "179",
+    "visible": false,
+    "label": "Afzetsysteem: *"
+  },
+  {
+    "idx": 51,
+    "name": "gxt.RadioGroup.8",
+    "id": "x-auto-431",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Complete wegafsluiting: * Ja \t Nee"
+  },
+  {
+    "idx": 52,
+    "name": "gxt.RadioGroup.8",
+    "id": "x-auto-433",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Complete wegafsluiting: * Ja \t Nee"
+  },
+  {
+    "idx": 53,
+    "name": "gxt.RadioGroup.9",
+    "id": "x-auto-436",
+    "type": "radio",
+    "value": "true",
+    "visible": true,
+    "label": "Doorgang hulpdiensten: Ja \t Nee"
+  },
+  {
+    "idx": 54,
+    "name": "gxt.RadioGroup.9",
+    "id": "x-auto-438",
+    "type": "radio",
+    "value": "false",
+    "visible": true,
+    "label": "Doorgang hulpdiensten: Ja \t Nee"
+  },
+  {
+    "idx": 55,
+    "name": "",
+    "id": "x-auto-160-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegnummer: *"
+  },
+  {
+    "idx": 56,
+    "name": "",
+    "id": "x-auto-161-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Wegzijde: *"
+  },
+  {
+    "idx": 57,
+    "name": "shutdownFrom",
+    "id": "x-auto-162-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Vanaf km: *"
+  },
+  {
+    "idx": 58,
+    "name": "requestNumber",
+    "id": "x-auto-164-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Aanvraagnummer:"
+  },
+  {
+    "idx": 59,
+    "name": "trafficDesk",
+    "id": "x-auto-165-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Verkeersloket: *"
+  },
+  {
+    "idx": 60,
+    "name": "trafficDesk-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "161",
+    "visible": false,
+    "label": "Verkeersloket: *"
+  },
+  {
+    "idx": 61,
+    "name": "contractor",
+    "id": "x-auto-167-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Bedrijfsnaam:"
+  },
+  {
+    "idx": 62,
+    "name": "contractor-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "124",
+    "visible": false,
+    "label": "Bedrijfsnaam:"
+  },
+  {
+    "idx": 63,
+    "name": "submitters.id",
+    "id": "x-auto-168-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Contactpersoon:"
+  },
+  {
+    "idx": 64,
+    "name": "submitters.id-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "1054",
+    "visible": false,
+    "label": "Contactpersoon:"
+  },
+  {
+    "idx": 65,
+    "name": "submitters.email",
+    "id": "x-auto-169-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "E-mail:"
+  },
+  {
+    "idx": 66,
+    "name": "submitters.mobilePhone",
+    "id": "x-auto-170-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Mobiel nummer:"
+  },
+  {
+    "idx": 67,
+    "name": "",
+    "id": "x-auto-727",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 68,
+    "name": "",
+    "id": "x-auto-729",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 69,
+    "name": "",
+    "id": "x-auto-731",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 70,
+    "name": "",
+    "id": "x-auto-733",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 71,
+    "name": "",
+    "id": "x-auto-735",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 72,
+    "name": "",
+    "id": "x-auto-737",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 73,
+    "name": "",
+    "id": "x-auto-739",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 74,
+    "name": "",
+    "id": "x-auto-741",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 75,
+    "name": "",
+    "id": "x-auto-743",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 76,
+    "name": "",
+    "id": "x-auto-745",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 77,
+    "name": "",
+    "id": "x-auto-747",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 78,
+    "name": "trafficCentre",
+    "id": "x-auto-178-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Verkeerscentrale:"
+  },
+  {
+    "idx": 79,
+    "name": "trafficCentre-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "VC-NON",
+    "visible": false,
+    "label": "Verkeerscentrale:"
+  },
+  {
+    "idx": 80,
+    "name": "trafficCentreContactInfo",
+    "id": "x-auto-179-input",
+    "type": "text",
+    "value": "",
+    "visible": true,
+    "label": "Telefoon:"
+  },
+  {
+    "idx": 81,
+    "name": "trafficCentreContactInfo-hidden",
+    "id": "",
+    "type": "hidden",
+    "value": "VC-NON - 088-798 4333",
+    "visible": false,
+    "label": "Telefoon:"
+  },
+  {
+    "idx": 82,
+    "name": "",
+    "id": "x-auto-808",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 83,
+    "name": "",
+    "id": "x-auto-810",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 84,
+    "name": "",
+    "id": "x-auto-812",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 85,
+    "name": "",
+    "id": "x-auto-780",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 86,
+    "name": "",
+    "id": "x-auto-782",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 87,
+    "name": "",
+    "id": "x-auto-784",
+    "type": "checkbox",
+    "value": "",
+    "visible": true,
+    "label": ""
+  },
+  {
+    "idx": 88,
+    "name": "",
+    "id": "x-auto-228",
+    "type": "checkbox",
+    "value": "",
+    "visible": false,
+    "label": "Boom Uitvouwen"
+  },
+  {
+    "idx": 89,
+    "name": "",
+    "id": "x-auto-189",
+    "type": "checkbox",
+    "value": "",
+    "visible": false,
+    "label": "borders"
+  }
+]

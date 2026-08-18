@@ -1,0 +1,30 @@
+[
+  {
+    "name": "",
+    "id": "x-auto-29-input",
+    "type": "text",
+    "current_value": "",
+    "context_label": ""
+  },
+  {
+    "name": "name",
+    "id": "x-auto-57-input",
+    "type": "text",
+    "current_value": "",
+    "context_label": "Gebruikersnaam:"
+  },
+  {
+    "name": "password",
+    "id": "x-auto-58-input",
+    "type": "password",
+    "current_value": "",
+    "context_label": "Wachtwoord:"
+  },
+  {
+    "name": "",
+    "id": "",
+    "type": "text",
+    "current_value": "",
+    "context_label": "Inloggen Belangrijke Kennisgeving Welkom op het netwerk van het Ministerie van Infrastructuur en Milieu. U kunt alleen aanloggen als u daartoe geautoriseerd bent. Het doorbreken van de beveiliging en het inbreken in de computersystemen van het Ministerie van Infrastructuur en Milieu is strafbaar (zie artikel 138a van het Wetboek van Strafrecht).     \t\t       \tOk"
+  }
+]
