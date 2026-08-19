@@ -151,6 +151,7 @@ with t_col2:
 st.header("5. Routes (Onbeperkt)")
 
 st.markdown("Voeg handmatig routes toe of importeer een Excel inspectielijst.")
+inspectie_modus = st.radio("Inspectie Modus", options=["Alleen te inspecteren vakken (Totaal > 0)", "Volledige Inspectie (Alle vakken)"])
 exclude_dbfm = st.checkbox("DBFM-trajecten automatisch uitsluiten", value=True)
 uploaded_file = st.file_uploader("Upload Excel Inspectielijst (.xlsx)", type=["xlsx", "xls"])
 if uploaded_file is not None:
@@ -159,14 +160,18 @@ if uploaded_file is not None:
         df = pd.read_excel(uploaded_file)
         
         # Check required columns
-        if 'Unieke code' in df.columns and 'Totaal' in df.columns:
+        if 'Unieke code' in df.columns:
             # Filter DBFM-traject (keep if NA, empty string, or '0') als checkbox AAN staat
             if exclude_dbfm and 'DBFM-traject' in df.columns:
                 df = df[df['DBFM-traject'].isna() | (df['DBFM-traject'].astype(str).str.strip() == '') | (df['DBFM-traject'].astype(str).str.strip() == '0')]
             
-            # Filter Totaal > 0
-            df['Totaal_num'] = pd.to_numeric(df['Totaal'], errors='coerce').fillna(0)
-            df = df[df['Totaal_num'] > 0]
+            # Filter Totaal > 0 if specific mode
+            if inspectie_modus == "Alleen te inspecteren vakken (Totaal > 0)":
+                if 'Totaal' in df.columns:
+                    df['Totaal_num'] = pd.to_numeric(df['Totaal'], errors='coerce').fillna(0)
+                    df = df[df['Totaal_num'] > 0]
+                else:
+                    st.warning("Kolom 'Totaal' niet gevonden in Excel! Modus wordt genegeerd.")
             
             routes_dict = {}
             for idx, row in df.iterrows():
@@ -221,7 +226,7 @@ if uploaded_file is not None:
             else:
                 st.warning("Geen geldige routes gevonden met Totaal > 0 (of alles was DBFM).")
         else:
-            st.error("De Excel mist de vereiste kolommen ('Unieke code' of 'Totaal').")
+            st.error("De Excel mist de vereiste kolom ('Unieke code').")
             
     except Exception as e:
         st.error(f"Fout bij inlezen Excel: {e}")
