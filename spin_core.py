@@ -482,30 +482,26 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "trafficHindranceClass", "1 (geen file)")
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
-                # Open de tabbladen (anders bestaan de knoppen nog niet in de HTML)
-                try:
-                    popup_page.locator("legend:has-text('Afzetting'), .x-fieldset-header:has-text('Afzetting')").first.click(timeout=1000)
-                    safe_wait(popup_page, 200)
-                except: pass
-
-                try:
-                    popup_page.locator("input[name='gxt.RadioGroup.3'][value='true']").first.click(timeout=500, force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.4'][value='false']").first.click(timeout=500, force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.5'][value='false']").first.click(timeout=500, force=True)
-                except: pass
+                # Zet de bolletjes in het Verkeer-deel direct via Javascript
+                popup_page.evaluate("""() => {
+                    const r3 = document.querySelector("input[name='gxt.RadioGroup.3'][value='true']");
+                    if (r3) r3.click();
+                    const r4 = document.querySelector("input[name='gxt.RadioGroup.4'][value='false']");
+                    if (r4) r4.click();
+                    const r5 = document.querySelector("input[name='gxt.RadioGroup.5'][value='false']");
+                    if (r5) r5.click();
+                }""")
 
                 confirm_and_validate_gxt_field(popup_page, "widthConstraint", "7,00")
                 select_gxt_dropdown_option(popup_page, "roadblockType", "96a-430")
 
-                try:
-                    popup_page.locator("legend:has-text('Kenmerken'), .x-fieldset-header:has-text('Kenmerken')").first.click(timeout=1000)
-                    safe_wait(popup_page, 200)
-                except: pass
-
-                try:
-                    popup_page.locator("input[name='gxt.RadioGroup.8'][value='false']").first.click(timeout=500, force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.9'][value='true']").first.click(timeout=500, force=True)
-                except: pass
+                # Zet de bolletjes voor breedte/lengte restricties
+                popup_page.evaluate("""() => {
+                    const r8 = document.querySelector("input[name='gxt.RadioGroup.8'][value='false']");
+                    if (r8) r8.click();
+                    const r9 = document.querySelector("input[name='gxt.RadioGroup.9'][value='true']");
+                    if (r9) r9.click();
+                }""")
 
                 select_gxt_dropdown_option(popup_page, "trafficDesk", config['district'])
                 
