@@ -89,7 +89,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
 def check_and_correct_location_after_full_fill(popup, task, log_queue):
     if popup.is_closed(): return
 
-    safe_wait(popup, 200)
+    safe_wait(popup, 1000)
 
     # Van km check
     from_meter_el = popup.locator("input[name='location.fromMeter']").first
@@ -97,11 +97,11 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         try: from_meter_el.click(timeout=500)
         except: pass
         from_meter_el.hover()
-        safe_wait(popup, 300)
+        safe_wait(popup, 1000)
         tooltip_text_from = popup.evaluate("""(name) => {
             const checkTxt = (text) => text.includes('tenminste') || text.includes('maximaal');
             const inp = document.querySelector(`input[name='${name}']`);
-            let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
+            let txt = inp ? (inp.getAttribute('data-errorqtip') || inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
             txt = txt.replace(/<[^>]*>?/gm, '').toLowerCase();
             
             if (!checkTxt(txt)) {
@@ -137,11 +137,11 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         try: to_meter_el.click(timeout=500)
         except: pass
         to_meter_el.hover()
-        safe_wait(popup, 300)
+        safe_wait(popup, 1000)
         tooltip_text_to = popup.evaluate("""(name) => {
             const checkTxt = (text) => text.includes('tenminste') || text.includes('maximaal');
             const inp = document.querySelector(`input[name='${name}']`);
-            let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
+            let txt = inp ? (inp.getAttribute('data-errorqtip') || inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
             txt = txt.replace(/<[^>]*>?/gm, '').toLowerCase();
             
             if (!checkTxt(txt)) {
