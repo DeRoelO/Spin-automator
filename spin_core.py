@@ -94,8 +94,10 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
     # Van km check
     from_meter_el = popup.locator("input[name='location.fromMeter']").first
     if from_meter_el.is_visible():
+        try: from_meter_el.click(timeout=500)
+        except: pass
         from_meter_el.hover()
-        safe_wait(popup, 200)
+        safe_wait(popup, 300)
         tooltip_text_from = popup.evaluate("""(name) => {
             const checkTxt = (text) => text.includes('tenminste') || text.includes('maximaal');
             const inp = document.querySelector(`input[name='${name}']`);
@@ -104,7 +106,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
             
             if (!checkTxt(txt)) {
                 txt = '';
-                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]')).filter(t => t.offsetHeight > 0);
+                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]'));
                 for (const t of tips) {
                     const tTxt = (t.innerText || '').trim().toLowerCase();
                     if (tTxt.includes('van km') && checkTxt(tTxt)) { txt = tTxt; break; }
@@ -112,7 +114,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
                 if (!txt) {
                     for (const t of tips) {
                         const tTxt = (t.innerText || '').trim().toLowerCase();
-                        if (checkTxt(tTxt)) { txt = tTxt; break; }
+                        if (checkTxt(tTxt) && !tTxt.includes('tot km')) { txt = tTxt; break; }
                     }
                 }
             }
@@ -132,8 +134,10 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
     # Tot km check
     to_meter_el = popup.locator("input[name='location.toMeter']").first
     if to_meter_el.is_visible():
+        try: to_meter_el.click(timeout=500)
+        except: pass
         to_meter_el.hover()
-        safe_wait(popup, 200)
+        safe_wait(popup, 300)
         tooltip_text_to = popup.evaluate("""(name) => {
             const checkTxt = (text) => text.includes('tenminste') || text.includes('maximaal');
             const inp = document.querySelector(`input[name='${name}']`);
@@ -142,7 +146,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
             
             if (!checkTxt(txt)) {
                 txt = '';
-                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]')).filter(t => t.offsetHeight > 0);
+                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]'));
                 for (const t of tips) {
                     const tTxt = (t.innerText || '').trim().toLowerCase();
                     if (tTxt.includes('tot km') && checkTxt(tTxt)) { txt = tTxt; break; }
@@ -150,7 +154,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
                 if (!txt) {
                     for (const t of tips) {
                         const tTxt = (t.innerText || '').trim().toLowerCase();
-                        if (checkTxt(tTxt)) { txt = tTxt; break; }
+                        if (checkTxt(tTxt) && !tTxt.includes('van km')) { txt = tTxt; break; }
                     }
                 }
             }
