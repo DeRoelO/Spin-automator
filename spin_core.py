@@ -479,6 +479,9 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "location.toRoadSide", task['Wegzijde'])
                 confirm_and_validate_gxt_field(popup_page, "location.toMeter", task['Tot km'])
 
+                # Doe de Van/Tot check direct na het invullen van het locatie blok
+                check_and_correct_location_after_full_fill(popup_page, log_queue)
+
                 select_gxt_dropdown_option(popup_page, "trafficHindranceClass", "1 (geen file)")
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
@@ -497,17 +500,13 @@ def run_spin_automation(tasks, config):
                 except: pass
 
                 select_gxt_dropdown_option(popup_page, "trafficDesk", config['district'])
-                select_gxt_dropdown_option(popup_page, "contractor", "DHV Royal Haskoning")
                 
-                select_gxt_dropdown_option(popup_page, "submitters.id", config['naam_dropdown'])
+                # Bedrijfsnaam en Contactpersoon worden automatisch door SPIN ingevuld o.b.v. inlog
                 add_contactpersoon_uitvoering(popup_page, config['naam_potlood'])
                 add_opmerking(popup_page, config['opmerking'])
                 
                 # Probeer overgebleven fout-velden (rood randje) op te lossen met in-en-uit klikken
                 resolve_invalid_fields(popup_page, log_queue)
-                
-                # Doe de Van/Tot check pas NA de fout-scanner
-                check_and_correct_location_after_full_fill(popup_page, log_queue)
 
                 for l_msg in log_queue:
                     yield l_msg
