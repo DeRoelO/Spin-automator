@@ -376,7 +376,7 @@ def run_spin_automation(tasks, config):
             headless=config['headless'],
             args=["--disable-popup-blocking", "--start-maximized"]
         )
-        context = browser.new_context(no_viewport=True)
+        context = browser.new_context(no_viewport=True, timezone_id="Europe/Amsterdam")
         page = context.new_page()
 
         yield "🔑 Inloggen op SPIN..."

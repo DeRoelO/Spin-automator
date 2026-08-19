@@ -8,3 +8,4 @@ services:
     environment:
       - SPIN_USER=${SPIN_USER:-}
       - SPIN_PASS=${SPIN_PASS:-}
+      - TZ=Europe/Amsterdam
