@@ -149,6 +149,78 @@ with t_col2:
     end_weekend = st.time_input("Eindtijd Weekend", value=get_time("end_weekend", "16:00"))
 
 st.header("5. Routes (Onbeperkt)")
+
+st.markdown("Voeg handmatig routes toe of importeer een Excel inspectielijst.")
+uploaded_file = st.file_uploader("Upload Excel Inspectielijst (.xlsx)", type=["xlsx", "xls"])
+if uploaded_file is not None:
+    try:
+        import re
+        df = pd.read_excel(uploaded_file)
+        
+        # Check required columns
+        if 'Unieke code' in df.columns and 'Totaal' in df.columns:
+            # Filter DBFM-traject (keep if NA, empty string, or '0')
+            if 'DBFM-traject' in df.columns:
+                df = df[df['DBFM-traject'].isna() | (df['DBFM-traject'].astype(str).str.strip() == '') | (df['DBFM-traject'].astype(str).str.strip() == '0')]
+            
+            # Filter Totaal > 0
+            df['Totaal_num'] = pd.to_numeric(df['Totaal'], errors='coerce').fillna(0)
+            df = df[df['Totaal_num'] > 0]
+            
+            routes_dict = {}
+            for idx, row in df.iterrows():
+                ucode = str(row['Unieke code']).strip()
+                if not ucode or ucode == 'nan': continue
+                
+                # Wegnummer (e.g. 12 from 120VWh...)
+                m_weg = re.match(r'^(\d+)', ucode)
+                weg_nr = f"A{m_weg.group(1)}" if m_weg else "Onbekend"
+                
+                # Zijde (L or R after a dash)
+                m_zijde = re.search(r'-([LR])', ucode)
+                if m_zijde:
+                    zijde = "Li" if m_zijde.group(1) == 'L' else "Re"
+                else:
+                    zijde = "Re"
+                    
+                # VAN and TOT
+                try:
+                    van_val = float(str(row.get('VAN', '0')).replace(',', '.'))
+                    tot_val = float(str(row.get('TOT', '0')).replace(',', '.'))
+                except:
+                    continue
+                    
+                key = (weg_nr, zijde)
+                mx = max(van_val, tot_val)
+                mn = min(van_val, tot_val)
+                
+                if key not in routes_dict:
+                    routes_dict[key] = {'max': mx, 'min': mn}
+                else:
+                    routes_dict[key]['max'] = max(routes_dict[key]['max'], mx)
+                    routes_dict[key]['min'] = min(routes_dict[key]['min'], mn)
+            
+            new_routes = []
+            for (weg, zijde), bounds in routes_dict.items():
+                if bounds['max'] > bounds['min']:
+                    new_routes.append({
+                        "Wegnummer": weg,
+                        "Wegzijde": zijde,
+                        "Van km": bounds['max'], # Hoogste
+                        "Tot km": bounds['min']  # Laagste
+                    })
+            
+            if new_routes:
+                st.session_state.route_data = pd.DataFrame(new_routes)
+                st.success(f"✅ {len(new_routes)} aaneengesloten trajecten berekend uit Excel!")
+            else:
+                st.warning("Geen geldige routes gevonden met Totaal > 0 (of alles was DBFM).")
+        else:
+            st.error("De Excel mist de vereiste kolommen ('Unieke code' of 'Totaal').")
+            
+    except Exception as e:
+        st.error(f"Fout bij inlezen Excel: {e}")
+
 if "route_data" not in st.session_state:
     st.session_state.route_data = pd.DataFrame([
         {"Wegnummer": "A15", "Wegzijde": "Re", "Van km": 150.0, "Tot km": 200.0}

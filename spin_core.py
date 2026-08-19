@@ -13,9 +13,11 @@ def write_debug_log(msg):
 def calculate_measure_segments(from_km_float, to_km_float):
     segments = []
     curr_start = from_km_float
+    is_descending = from_km_float > to_km_float
+    step = -20.0 if is_descending else 20.0
     
     while True:
-        remaining = round(to_km_float - curr_start, 3)
+        remaining = round(abs(to_km_float - curr_start), 3)
         # Als het overgebleven stuk kleiner of gelijk aan 20km is -> laatste stuk
         if remaining <= 20.0:
             segments.append((curr_start, to_km_float))
@@ -24,9 +26,9 @@ def calculate_measure_segments(from_km_float, to_km_float):
         elif remaining < 25.0:
             segments.append((curr_start, to_km_float))
             break
-        # Anders maken we een strak blok van 20.0 km
+        # Anders maken we een strak blok van 20.0 km (of -20.0 km)
         else:
-            curr_end = round(curr_start + 20.0, 3)
+            curr_end = round(curr_start + step, 3)
             segments.append((curr_start, curr_end))
             curr_start = curr_end
             
