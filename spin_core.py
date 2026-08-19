@@ -420,20 +420,10 @@ def run_spin_automation(tasks, config):
                     time.sleep(1.0)
                     break
 
-            name_input = page.locator("input[name='name'], input[name='j_username'], input[name='username']").locator("visible=true").first
-            pass_input = page.locator("input[name='password'], input[type='password'], input[name='j_password']").locator("visible=true").first
-            
-            if name_input.is_visible():
-                name_input.focus()
-                name_input.fill("")
-                page.keyboard.type(config['username'], delay=50)
-                
-            if pass_input.is_visible():
-                pass_input.focus()
-                pass_input.fill("")
-                page.keyboard.type(config['password'], delay=50)
-
-            time.sleep(1.0) # Even wachten tot de velden goed geregistreerd zijn
+            name_input = page.locator("input[name='name']").first
+            pass_input = page.locator("input[name='password']").first
+            name_input.fill(config['username'], force=True)
+            pass_input.fill(config['password'], force=True)
 
             buttons = page.query_selector_all("button")
             for btn in buttons:
