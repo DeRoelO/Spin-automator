@@ -420,7 +420,7 @@ def run_spin_automation(tasks, config):
                     time.sleep(1.0)
                     break
 
-            name_input = page.locator("input[name='name'], input[type='text'], input[name='j_username']").locator("visible=true").first
+            name_input = page.locator("input[name='name'], input[name='j_username'], input[name='username']").locator("visible=true").first
             pass_input = page.locator("input[name='password'], input[type='password'], input[name='j_password']").locator("visible=true").first
             
             if name_input.is_visible():
