@@ -304,8 +304,8 @@ if "tasks" in st.session_state and st.session_state.tasks:
             "end_weekend": end_weekend.strftime("%H:%M")
         })
 
-        tv = tussenvoegsel.strip() + " " if tussenvoegsel.strip() else ""
-        naam_dropdown = f"{tv}{achternaam.strip()}, {voornaam.strip()}"
+        tv = " " + tussenvoegsel.strip() if tussenvoegsel.strip() else ""
+        naam_dropdown = f"{achternaam.strip()}{tv}, {voornaam.strip()}"
         naam_potlood = f"{achternaam.strip()} {tussenvoegsel.strip()}".strip()
         
         config = {
