@@ -186,7 +186,7 @@ def add_contactpersoon_uitvoering(popup, search_term):
         if not pencil_btn.is_visible():
             pencil_btn = popup.locator("button:has(img[src*='cache.png'])").last
 
-        pencil_btn.click()
+        pencil_btn.click(timeout=1000)
         safe_wait(popup, 1000)
 
         nieuw_btn = popup.locator(".x-window button:has-text('Nieuw')").first
@@ -483,17 +483,17 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
                 try:
-                    popup_page.locator("input[name='gxt.RadioGroup.3'][value='true']").first.click(force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.4'][value='false']").first.click(force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.5'][value='false']").first.click(force=True)
+                    popup_page.locator("input[name='gxt.RadioGroup.3'][value='true']").first.click(timeout=500, force=True)
+                    popup_page.locator("input[name='gxt.RadioGroup.4'][value='false']").first.click(timeout=500, force=True)
+                    popup_page.locator("input[name='gxt.RadioGroup.5'][value='false']").first.click(timeout=500, force=True)
                 except: pass
 
                 confirm_and_validate_gxt_field(popup_page, "widthConstraint", "7,00")
                 select_gxt_dropdown_option(popup_page, "roadblockType", "96a-430")
 
                 try:
-                    popup_page.locator("input[name='gxt.RadioGroup.8'][value='false']").first.click(force=True)
-                    popup_page.locator("input[name='gxt.RadioGroup.9'][value='true']").first.click(force=True)
+                    popup_page.locator("input[name='gxt.RadioGroup.8'][value='false']").first.click(timeout=500, force=True)
+                    popup_page.locator("input[name='gxt.RadioGroup.9'][value='true']").first.click(timeout=500, force=True)
                 except: pass
 
                 select_gxt_dropdown_option(popup_page, "trafficDesk", config['district'])
