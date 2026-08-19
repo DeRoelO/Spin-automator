@@ -51,21 +51,7 @@ def confirm_and_validate_gxt_field(popup, field_name, value):
         if popup.is_closed(): return
         el = popup.locator(f"input[name='{field_name}'], textarea[name='{field_name}']").first
         if el.is_visible():
-            el.click()
             el.fill(value)
-            popup.evaluate("""(name) => {
-                const inp = document.querySelector(`input[name='${name}']`);
-                if (inp) {
-                    ['input', 'change', 'blur', 'keyup'].forEach(evt => inp.dispatchEvent(new Event(evt, { bubbles: true })));
-                }
-            }""", field_name)
-            el.press("Enter")
-            el.press("Tab")
-            popup.evaluate("""() => {
-                const legend = document.querySelector('fieldset legend, .x-fieldset-header, div.x-form-item-label');
-                if (legend) legend.click();
-            }""")
-            safe_wait(popup, 50)
     except Exception:
         pass
 
@@ -73,36 +59,13 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
     try:
         if popup.is_closed(): return False
         input_el = popup.locator(f"input[name='{field_name}']").first
-        if not input_el.is_visible(): return False
-
-        parent_wrap = popup.locator(f"input[name='{field_name}']").locator("xpath=ancestor::div[contains(@class, 'x-form-field-wrap')]").first
-        trigger = parent_wrap.locator("img.x-form-trigger").first
-        if trigger.is_visible():
-            trigger.click()
-        else:
-            input_el.click()
-
-        safe_wait(popup, 400)
-        items = popup.query_selector_all(".x-combo-list-item")
-        visible_items = [it for it in items if it.is_visible()]
-
-        matched = False
-        if target_text and visible_items:
-            for it in visible_items:
-                txt = it.inner_text().strip()
-                if target_text.lower() in txt.lower():
-                    it.click()
-                    matched = True
-                    break
-        if not matched and visible_items:
-            target_item = visible_items[1] if len(visible_items) > 1 else visible_items[0]
-            target_item.click()
-            matched = True
-
-        safe_wait(popup, 500)
-        return matched
+        if input_el.is_visible():
+            input_el.fill(target_text)
+            input_el.press("Tab")
+            return True
     except Exception:
-        return False
+        pass
+    return False
 
 def check_and_correct_location_after_full_fill(popup, log_queue):
     if popup.is_closed(): return
@@ -184,7 +147,9 @@ def resolve_invalid_fields(popup, log_queue):
             el = popup.locator(f"input[name='{name}'], textarea[name='{name}'], input#{name}").first
             if el.is_visible():
                 el.click()
-                safe_wait(popup, 100)
+                safe_wait(popup, 50)
+                el.press("Enter")
+                safe_wait(popup, 50)
                 # Click neutral
                 popup.evaluate("""() => {
                     const l = document.querySelector('fieldset legend, .x-fieldset-header, div.x-form-item-label');
