@@ -461,8 +461,6 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "location.toRoadSide", task['Wegzijde'])
                 confirm_and_validate_gxt_field(popup_page, "location.toMeter", task['Tot km'])
 
-                check_and_correct_location_after_full_fill(popup_page, log_queue)
-
                 select_gxt_dropdown_option(popup_page, "trafficHindranceClass", "1 (geen file)")
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
@@ -489,6 +487,9 @@ def run_spin_automation(tasks, config):
                 
                 # Probeer overgebleven fout-velden (rood randje) op te lossen met in-en-uit klikken
                 resolve_invalid_fields(popup_page, log_queue)
+                
+                # Doe de Van/Tot check pas NA de fout-scanner
+                check_and_correct_location_after_full_fill(popup_page, log_queue)
 
                 for l_msg in log_queue:
                     yield l_msg
