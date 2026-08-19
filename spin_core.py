@@ -255,7 +255,7 @@ def add_opmerking(popup, text):
     except Exception:
         pass
 
-def click_bewaren_or_report_error(popup, task_info, log_queue):
+def click_bewaren_or_report_error(popup, task_info, log_queue, is_retry=False):
     safe_wait(popup, 1500)
     if popup.is_closed(): return False
 
@@ -292,7 +292,32 @@ def click_bewaren_or_report_error(popup, task_info, log_queue):
         return True
     else:
         errors = status.get("errors", "Onbekend")
+        
+        if not is_retry:
+            log_queue.append(f"⚠️ Waarschuwing: Velden '{errors}' zijn invalide. Poging tot automatisch herstel...")
+            popup.evaluate("""() => {
+                const invalidEls = Array.from(document.querySelectorAll('.x-form-invalid'));
+                invalidEls.forEach(el => {
+                    ['focus', 'blur', 'change'].forEach(evt => {
+                        el.dispatchEvent(new Event(evt, { bubbles: true, cancelable: true }));
+                    });
+                });
+                const legend = document.querySelector('legend');
+                if (legend) legend.click();
+                else document.body.click();
+            }""")
+            safe_wait(popup, 1500)
+            return click_bewaren_or_report_error(popup, task_info, log_queue, is_retry=True)
+            
         log_queue.append(f"❌ MISLUKT: Spinmelding vak {task_info['Wegnummer']} {task_info['Van km']} - {task_info['Tot km']} {task_info['Wegzijde']} mislukt, fout op veld: {errors}")
+        try:
+            import os, time
+            os.makedirs("screenshots", exist_ok=True)
+            sc_path = f"screenshots/error_{task_info['Wegnummer']}_{task_info['Van km']}_{int(time.time())}.png"
+            popup.screenshot(path=sc_path)
+            log_queue.append(f"📸 Screenshot bewaard: {sc_path}")
+        except Exception as e:
+            pass
         return False
 
 def handle_post_save_dialogs(popup, log_queue):
