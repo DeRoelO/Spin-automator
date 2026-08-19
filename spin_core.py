@@ -432,9 +432,12 @@ def run_spin_automation(tasks, config):
             pass_input = page.locator("input[type='password']").locator("visible=true").first
             
             name_input.click()
-            name_input.fill(config['username'])
+            name_input.fill("")
+            name_input.type(config['username'], delay=50)
+            
             pass_input.click()
-            pass_input.fill(config['password'])
+            pass_input.fill("")
+            pass_input.type(config['password'], delay=50)
             pass_input.press("Tab")
             time.sleep(0.5)
 
