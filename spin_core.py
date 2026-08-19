@@ -51,7 +51,9 @@ def confirm_and_validate_gxt_field(popup, field_name, value):
         if popup.is_closed(): return
         el = popup.locator(f"input[name='{field_name}'], textarea[name='{field_name}']").first
         if el.is_visible() and el.is_enabled():
+            el.click(force=True, timeout=500)
             el.fill(value)
+            el.press("Tab")
     except Exception:
         pass
 
@@ -118,6 +120,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         }""", "location.fromMeter")
 
         if tooltip_text_from:
+            log_queue.append(f"🔍 DEBUG 'Van km' tooltip: '{tooltip_text_from}'")
             min_match = re.search(r"tenminste\s+([\d,\.]+)", tooltip_text_from, re.IGNORECASE)
             max_match = re.search(r"maximaal\s+([\d,\.]+)", tooltip_text_from, re.IGNORECASE)
             corrected_val_from = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
@@ -155,6 +158,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         }""", "location.toMeter")
 
         if tooltip_text_to:
+            log_queue.append(f"🔍 DEBUG 'Tot km' tooltip: '{tooltip_text_to}'")
             min_match = re.search(r"tenminste\s+([\d,\.]+)", tooltip_text_to, re.IGNORECASE)
             max_match = re.search(r"maximaal\s+([\d,\.]+)", tooltip_text_to, re.IGNORECASE)
             corrected_val_to = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
