@@ -151,6 +151,7 @@ with t_col2:
 st.header("5. Routes (Onbeperkt)")
 
 st.markdown("Voeg handmatig routes toe of importeer een Excel inspectielijst.")
+exclude_dbfm = st.checkbox("DBFM-trajecten automatisch uitsluiten", value=True)
 uploaded_file = st.file_uploader("Upload Excel Inspectielijst (.xlsx)", type=["xlsx", "xls"])
 if uploaded_file is not None:
     try:
@@ -159,8 +160,8 @@ if uploaded_file is not None:
         
         # Check required columns
         if 'Unieke code' in df.columns and 'Totaal' in df.columns:
-            # Filter DBFM-traject (keep if NA, empty string, or '0')
-            if 'DBFM-traject' in df.columns:
+            # Filter DBFM-traject (keep if NA, empty string, or '0') als checkbox AAN staat
+            if exclude_dbfm and 'DBFM-traject' in df.columns:
                 df = df[df['DBFM-traject'].isna() | (df['DBFM-traject'].astype(str).str.strip() == '') | (df['DBFM-traject'].astype(str).str.strip() == '0')]
             
             # Filter Totaal > 0
