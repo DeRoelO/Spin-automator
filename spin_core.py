@@ -50,7 +50,7 @@ def confirm_and_validate_gxt_field(popup, field_name, value):
     try:
         if popup.is_closed(): return
         el = popup.locator(f"input[name='{field_name}'], textarea[name='{field_name}']").first
-        if el.is_visible():
+        if el.is_visible() and el.is_enabled():
             el.fill(value)
     except Exception:
         pass
@@ -59,8 +59,8 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
     try:
         if popup.is_closed(): return False
         input_el = popup.locator(f"input[name='{field_name}']").first
-        if input_el.is_visible():
-            input_el.click()
+        if input_el.is_visible() and input_el.is_enabled():
+            input_el.click(timeout=500, force=True)
             input_el.fill("")
             # Type de tekst om de dropdown zoekfunctie / autocomplete te triggeren
             input_el.type(target_text, delay=10)
