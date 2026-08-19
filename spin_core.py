@@ -413,13 +413,9 @@ def run_spin_automation(tasks, config):
             page.goto(BASE_URL, wait_until="networkidle")
             time.sleep(2.0)
 
-            buttons = page.query_selector_all("button")
-            for btn in buttons:
-                if btn.is_visible() and btn.inner_text().strip() == "Ok":
-                    btn.click()
-                    time.sleep(1.0)
-                    break
-
+            # Soms is er een popup, maar als we direct op 'Ok' klikken drukken we misschien al op de inlog-knop!
+            # We zoeken en vullen EERST het wachtwoord in.
+            
             name_input = page.locator("input[name='name']").first
             pass_input = page.locator("input[name='password']").first
             name_input.fill(config['username'], force=True)
