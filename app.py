@@ -306,7 +306,7 @@ if "tasks" in st.session_state and st.session_state.tasks:
 
         tv = " " + tussenvoegsel.strip() if tussenvoegsel.strip() else ""
         naam_dropdown = f"{achternaam.strip()}{tv}, {voornaam.strip()}"
-        naam_potlood = f"{achternaam.strip()} {tussenvoegsel.strip()}".strip()
+        naam_potlood = f"{achternaam.strip()}{tv}, {voornaam.strip()}"
         
         config = {
             "username": username,

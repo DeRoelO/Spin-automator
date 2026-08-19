@@ -65,7 +65,7 @@ def confirm_and_validate_gxt_field(popup, field_name, value):
                 const legend = document.querySelector('fieldset legend, .x-fieldset-header, div.x-form-item-label');
                 if (legend) legend.click();
             }""")
-            safe_wait(popup, 800)
+            safe_wait(popup, 50)
     except Exception:
         pass
 
@@ -167,6 +167,35 @@ def check_and_correct_location_after_full_fill(popup, log_queue):
                 confirm_and_validate_gxt_field(popup, "location.toMeter", corrected_val_to)
                 log_queue.append(f"⚠️ 'Tot km' gecorrigeerd naar toegestane grens: {corrected_val_to}")
 
+def resolve_invalid_fields(popup, log_queue):
+    if popup.is_closed(): return
+    safe_wait(popup, 500)
+    
+    invalid_fields = popup.evaluate("""() => {
+        return Array.from(document.querySelectorAll('input.x-form-invalid, textarea.x-form-invalid')).map(el => el.name || el.id);
+    }""")
+    
+    if not invalid_fields:
+        return
+        
+    for name in invalid_fields:
+        if not name or popup.is_closed(): continue
+        try:
+            el = popup.locator(f"input[name='{name}'], textarea[name='{name}'], input#{name}").first
+            if el.is_visible():
+                el.click()
+                safe_wait(popup, 100)
+                # Click neutral
+                popup.evaluate("""() => {
+                    const l = document.querySelector('fieldset legend, .x-fieldset-header, div.x-form-item-label');
+                    if(l) l.click();
+                    else document.body.click();
+                }""")
+                safe_wait(popup, 200)
+                log_queue.append(f"ℹ️ Extra check op fout-veld uitgevoerd: {name}")
+        except:
+            pass
+            
 def add_contactpersoon_uitvoering(popup, search_term):
     try:
         if popup.is_closed(): return
@@ -255,7 +284,7 @@ def add_opmerking(popup, text):
     except Exception:
         pass
 
-def click_bewaren_or_report_error(popup, task_info, log_queue, is_retry=False):
+def click_bewaren_or_report_error(popup, task_info, log_queue):
     safe_wait(popup, 1500)
     if popup.is_closed(): return False
 
@@ -292,32 +321,7 @@ def click_bewaren_or_report_error(popup, task_info, log_queue, is_retry=False):
         return True
     else:
         errors = status.get("errors", "Onbekend")
-        
-        if not is_retry:
-            log_queue.append(f"⚠️ Waarschuwing: Velden '{errors}' zijn invalide. Poging tot automatisch herstel...")
-            popup.evaluate("""() => {
-                const invalidEls = Array.from(document.querySelectorAll('.x-form-invalid'));
-                invalidEls.forEach(el => {
-                    ['focus', 'blur', 'change'].forEach(evt => {
-                        el.dispatchEvent(new Event(evt, { bubbles: true, cancelable: true }));
-                    });
-                });
-                const legend = document.querySelector('legend');
-                if (legend) legend.click();
-                else document.body.click();
-            }""")
-            safe_wait(popup, 1500)
-            return click_bewaren_or_report_error(popup, task_info, log_queue, is_retry=True)
-            
         log_queue.append(f"❌ MISLUKT: Spinmelding vak {task_info['Wegnummer']} {task_info['Van km']} - {task_info['Tot km']} {task_info['Wegzijde']} mislukt, fout op veld: {errors}")
-        try:
-            import os, time
-            os.makedirs("screenshots", exist_ok=True)
-            sc_path = f"screenshots/error_{task_info['Wegnummer']}_{task_info['Van km']}_{int(time.time())}.png"
-            popup.screenshot(path=sc_path)
-            log_queue.append(f"📸 Screenshot bewaard: {sc_path}")
-        except Exception as e:
-            pass
         return False
 
 def handle_post_save_dialogs(popup, log_queue):
@@ -513,6 +517,9 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "submitters.id", config['naam_dropdown'])
                 add_contactpersoon_uitvoering(popup_page, config['naam_potlood'])
                 add_opmerking(popup_page, config['opmerking'])
+                
+                # Probeer overgebleven fout-velden (rood randje) op te lossen met in-en-uit klikken
+                resolve_invalid_fields(popup_page, log_queue)
 
                 for l_msg in log_queue:
                     yield l_msg
