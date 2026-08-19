@@ -415,7 +415,7 @@ def run_spin_automation(tasks, config):
 
             # Blijf op 'Ok' klikken (van eventuele waarschuwingen) totdat we écht het wachtwoordveld zien
             for _ in range(15):
-                pass_input = page.locator("input[name='password']").first
+                pass_input = page.locator("input[type='password']").first
                 if pass_input.is_visible():
                     break  # Login scherm is bereikt!
                     
@@ -429,9 +429,12 @@ def run_spin_automation(tasks, config):
 
             # Nu zijn we zeker weten bij het Inlogvenster
             name_input = page.locator("input[name='name']").first
-            pass_input = page.locator("input[name='password']").first
+            pass_input = page.locator("input[type='password']").first
+            
             name_input.fill(config['username'], force=True)
             pass_input.fill(config['password'], force=True)
+            pass_input.press("Tab")
+            time.sleep(0.5)
 
             # Klik de Ok knop van het inlogscherm
             buttons = page.query_selector_all("button")
