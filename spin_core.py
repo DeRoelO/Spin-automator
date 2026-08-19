@@ -420,18 +420,18 @@ def run_spin_automation(tasks, config):
                     time.sleep(1.0)
                     break
 
-            name_input = page.locator("input[name='name']").first
-            pass_input = page.locator("input[name='password']").first
+            name_input = page.locator("input[name='name'], input[type='text'], input[name='j_username']").locator("visible=true").first
+            pass_input = page.locator("input[name='password'], input[type='password'], input[name='j_password']").locator("visible=true").first
             
             if name_input.is_visible():
-                name_input.click(force=True)
+                name_input.focus()
                 name_input.fill("")
-                name_input.type(config['username'], delay=50)
+                page.keyboard.type(config['username'], delay=50)
                 
             if pass_input.is_visible():
-                pass_input.click(force=True)
+                pass_input.focus()
                 pass_input.fill("")
-                pass_input.type(config['password'], delay=50)
+                page.keyboard.type(config['password'], delay=50)
 
             time.sleep(1.0) # Even wachten tot de velden goed geregistreerd zijn
 
