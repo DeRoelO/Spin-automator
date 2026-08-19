@@ -428,11 +428,13 @@ def run_spin_automation(tasks, config):
                 time.sleep(0.5)
 
             # Nu zijn we zeker weten bij het Inlogvenster
-            name_input = page.locator("input[name='name']").first
-            pass_input = page.locator("input[type='password']").first
+            name_input = page.locator("input[name='name']").locator("visible=true").first
+            pass_input = page.locator("input[type='password']").locator("visible=true").first
             
-            name_input.fill(config['username'], force=True)
-            pass_input.fill(config['password'], force=True)
+            name_input.click()
+            name_input.fill(config['username'])
+            pass_input.click()
+            pass_input.fill(config['password'])
             pass_input.press("Tab")
             time.sleep(0.5)
 
