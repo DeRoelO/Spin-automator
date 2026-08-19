@@ -60,9 +60,27 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         if popup.is_closed(): return False
         input_el = popup.locator(f"input[name='{field_name}']").first
         if input_el.is_visible():
-            input_el.fill(target_text)
-            input_el.press("Tab")
-            return True
+            input_el.click()
+            input_el.fill("")
+            # Type de tekst om de dropdown zoekfunctie / autocomplete te triggeren
+            input_el.type(target_text, delay=10)
+            
+            safe_wait(popup, 500) # Wacht even op het laden van de lijst
+            
+            items = popup.query_selector_all(".x-combo-list-item")
+            visible_items = [it for it in items if it.is_visible()]
+            
+            if visible_items:
+                for it in visible_items:
+                    if target_text.lower() in it.inner_text().strip().lower():
+                        it.click()
+                        return True
+                # Pak anders gewoon de bovenste die over is
+                visible_items[0].click()
+                return True
+            else:
+                input_el.press("Tab")
+                return True
     except Exception:
         pass
     return False
