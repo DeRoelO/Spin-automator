@@ -88,13 +88,13 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
 def check_and_correct_location_after_full_fill(popup, log_queue):
     if popup.is_closed(): return
 
-    safe_wait(popup, 800)
+    safe_wait(popup, 200)
 
     # Van km check
     from_meter_el = popup.locator("input[name='location.fromMeter']").first
     if from_meter_el.is_visible():
         from_meter_el.hover()
-        safe_wait(popup, 1000)
+        safe_wait(popup, 200)
         tooltip_text_from = popup.evaluate("""(name) => {
             const inp = document.querySelector(`input[name='${name}']`);
             let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
@@ -123,7 +123,7 @@ def check_and_correct_location_after_full_fill(popup, log_queue):
     to_meter_el = popup.locator("input[name='location.toMeter']").first
     if to_meter_el.is_visible():
         to_meter_el.hover()
-        safe_wait(popup, 1000)
+        safe_wait(popup, 200)
         tooltip_text_to = popup.evaluate("""(name) => {
             const inp = document.querySelector(`input[name='${name}']`);
             let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
@@ -479,9 +479,6 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "location.toRoadSide", task['Wegzijde'])
                 confirm_and_validate_gxt_field(popup_page, "location.toMeter", task['Tot km'])
 
-                # Doe de Van/Tot check direct na het invullen van het locatie blok
-                check_and_correct_location_after_full_fill(popup_page, log_queue)
-
                 select_gxt_dropdown_option(popup_page, "trafficHindranceClass", "1 (geen file)")
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
@@ -505,8 +502,11 @@ def run_spin_automation(tasks, config):
                 add_contactpersoon_uitvoering(popup_page, config['naam_potlood'])
                 add_opmerking(popup_page, config['opmerking'])
                 
-                # Probeer overgebleven fout-velden (rood randje) op te lossen met in-en-uit klikken
+                # Fout-scanner: los formulier validatie errors op
                 resolve_invalid_fields(popup_page, log_queue)
+                
+                # ALS LAATSTE: Van/Tot grenzen checken en corrigeren
+                check_and_correct_location_after_full_fill(popup_page, log_queue)
 
                 for l_msg in log_queue:
                     yield l_msg
