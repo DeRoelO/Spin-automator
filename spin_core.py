@@ -63,9 +63,9 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
             input_el.click(timeout=500, force=True)
             input_el.fill("")
             # Type de tekst om de dropdown zoekfunctie / autocomplete te triggeren
-            input_el.type(target_text, delay=10)
+            input_el.type(target_text, delay=30)
             
-            safe_wait(popup, 500) # Wacht even op het laden van de lijst
+            safe_wait(popup, 800) # Wacht even op het laden van de lijst
             
             items = popup.query_selector_all(".x-combo-list-item")
             visible_items = [it for it in items if it.is_visible()]
@@ -178,9 +178,9 @@ def resolve_invalid_fields(popup, log_queue):
             el = popup.locator(f"input[name='{name}'], textarea[name='{name}'], input#{name}").first
             if el.is_visible():
                 el.click()
-                safe_wait(popup, 50)
+                safe_wait(popup, 200)
                 el.press("Enter")
-                safe_wait(popup, 50)
+                safe_wait(popup, 200)
                 # Click neutral
                 popup.evaluate("""() => {
                     const l = document.querySelector('fieldset legend, .x-fieldset-header, div.x-form-item-label');

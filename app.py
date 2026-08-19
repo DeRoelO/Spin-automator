@@ -266,6 +266,13 @@ if st.button("Genereer Samenvatting & Plan Meldingen", type="primary"):
                 
                 f_km = float(row['Van km'])
                 t_km = float(row['Tot km'])
+                zijde = str(row['Wegzijde']).strip()
+                
+                # Zorg dat Li ALTIJD van hoog naar laag gaat, en Re ALTIJD van laag naar hoog
+                if zijde == "Li":
+                    f_km, t_km = max(f_km, t_km), min(f_km, t_km)
+                else:
+                    f_km, t_km = min(f_km, t_km), max(f_km, t_km)
                 
                 if auto_split:
                     segments = spin_core.calculate_measure_segments(f_km, t_km)
