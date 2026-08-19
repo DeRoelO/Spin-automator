@@ -422,8 +422,18 @@ def run_spin_automation(tasks, config):
 
             name_input = page.locator("input[name='name']").first
             pass_input = page.locator("input[name='password']").first
-            name_input.fill(config['username'], force=True)
-            pass_input.fill(config['password'], force=True)
+            
+            if name_input.is_visible():
+                name_input.click(force=True)
+                name_input.fill("")
+                name_input.type(config['username'], delay=50)
+                
+            if pass_input.is_visible():
+                pass_input.click(force=True)
+                pass_input.fill("")
+                pass_input.type(config['password'], delay=50)
+
+            time.sleep(1.0) # Even wachten tot de velden goed geregistreerd zijn
 
             buttons = page.query_selector_all("button")
             for btn in buttons:
