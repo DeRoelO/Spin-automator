@@ -396,6 +396,10 @@ def run_spin_automation(tasks, config):
     """
     Generator function that yields log messages.
     """
+    if not config.get('password'):
+        yield "❌ WACHTWOORD IS LEEG! (Ook al lijken er bolletjes te staan). Je browser's 'autofill' heeft het wachtwoord er visueel in gezet, maar niet doorgegeven aan de website. Typ even 1 letter achter je wachtwoord en haal die weer weg, druk daarna op Enter en probeer het nog eens."
+        return
+
     yield "🚀 SPIN Automator gestart..."
     write_debug_log("\n=== NIEUWE AUTOMATISERING RUN ===")
     
