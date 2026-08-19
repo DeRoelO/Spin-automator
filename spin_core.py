@@ -542,6 +542,19 @@ def run_spin_automation(tasks, config):
                     yield l_msg
                 log_queue.clear()
 
+                # CHECK: Zijn Van en Tot aan elkaar gelijk gesteld?
+                try:
+                    f_val = popup_page.locator("input[name='location.fromMeter']").input_value(timeout=1000)
+                    t_val = popup_page.locator("input[name='location.toMeter']").input_value(timeout=1000)
+                    if f_val and t_val and f_val == t_val:
+                        yield f"⚠️ WAARSCHUWING: Aanvraag valt compleet buiten de weggrenzen (Van en Tot zijn beide gelijk aan {f_val}). Deze route wordt afgesloten zonder op te slaan."
+                        try_click_sluiten_until_closed(popup_page, max_attempts=15)
+                        yield f"ℹ️ Venster voor {task['Wegnummer']} gesloten."
+                        time.sleep(1.0)
+                        continue
+                except Exception:
+                    pass
+
                 is_saved = click_bewaren_or_report_error(popup_page, task, log_queue)
                 for l_msg in log_queue:
                     yield l_msg
