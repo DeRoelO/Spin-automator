@@ -213,11 +213,18 @@ if uploaded_file is not None:
             new_routes = []
             for (weg, zijde), bounds in routes_dict.items():
                 if bounds['max'] > bounds['min']:
+                    if zijde == "Li":
+                        van_km = bounds['max'] # Li = van hoog naar laag
+                        tot_km = bounds['min']
+                    else:
+                        van_km = bounds['min'] # Re = van laag naar hoog
+                        tot_km = bounds['max']
+                        
                     new_routes.append({
                         "Wegnummer": weg,
                         "Wegzijde": zijde,
-                        "Van km": bounds['max'], # Hoogste
-                        "Tot km": bounds['min']  # Laagste
+                        "Van km": van_km,
+                        "Tot km": tot_km
                     })
             
             if new_routes:

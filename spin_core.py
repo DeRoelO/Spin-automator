@@ -84,8 +84,7 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
     except Exception:
         pass
     return False
-
-def check_and_correct_location_after_full_fill(popup, log_queue):
+def check_and_correct_location_after_full_fill(popup, task, log_queue):
     if popup.is_closed(): return
 
     safe_wait(popup, 200)
@@ -114,10 +113,24 @@ def check_and_correct_location_after_full_fill(popup, log_queue):
         if tooltip_text_from:
             min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_from)
             max_match = re.search(r"(?:maximaal|hoogstens)\s+([\d,]+)", tooltip_text_from)
-            corrected_val_from = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
+            corrected_val_from = None
+            
+            try:
+                curr_val = float(str(task['Van km']).replace(',', '.'))
+                min_val = float(min_match.group(1).replace(',', '.')) if min_match else None
+                max_val = float(max_match.group(1).replace(',', '.')) if max_match else None
+                
+                if min_val is not None and max_val is not None:
+                    if curr_val < min_val: corrected_val_from = min_match.group(1)
+                    elif curr_val > max_val: corrected_val_from = max_match.group(1)
+                elif min_match: corrected_val_from = min_match.group(1)
+                elif max_match: corrected_val_from = max_match.group(1)
+            except:
+                corrected_val_from = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
+                
             if corrected_val_from:
                 confirm_and_validate_gxt_field(popup, "location.fromMeter", corrected_val_from)
-                log_queue.append(f"⚠️ 'Van km' gecorrigeerd naar toegestane grens: {corrected_val_from}")
+                log_queue.append(f"ℹ️ 'Van km' gecorrigeerd naar toegestane grens: {corrected_val_from}")
 
     # Tot km check
     to_meter_el = popup.locator("input[name='location.toMeter']").first
@@ -143,10 +156,24 @@ def check_and_correct_location_after_full_fill(popup, log_queue):
         if tooltip_text_to:
             min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_to)
             max_match = re.search(r"(?:maximaal|hoogstens)\s+([\d,]+)", tooltip_text_to)
-            corrected_val_to = max_match.group(1) if max_match else (min_match.group(1) if min_match else None)
+            corrected_val_to = None
+            
+            try:
+                curr_val = float(str(task['Tot km']).replace(',', '.'))
+                min_val = float(min_match.group(1).replace(',', '.')) if min_match else None
+                max_val = float(max_match.group(1).replace(',', '.')) if max_match else None
+                
+                if min_val is not None and max_val is not None:
+                    if curr_val < min_val: corrected_val_to = min_match.group(1)
+                    elif curr_val > max_val: corrected_val_to = max_match.group(1)
+                elif min_match: corrected_val_to = min_match.group(1)
+                elif max_match: corrected_val_to = max_match.group(1)
+            except:
+                corrected_val_to = max_match.group(1) if max_match else (min_match.group(1) if min_match else None)
+                
             if corrected_val_to:
                 confirm_and_validate_gxt_field(popup, "location.toMeter", corrected_val_to)
-                log_queue.append(f"⚠️ 'Tot km' gecorrigeerd naar toegestane grens: {corrected_val_to}")
+                log_queue.append(f"ℹ️ 'Tot km' gecorrigeerd naar toegestane grens: {corrected_val_to}")
 
 def resolve_invalid_fields(popup, log_queue):
     if popup.is_closed(): return
@@ -513,7 +540,7 @@ def run_spin_automation(tasks, config):
                 resolve_invalid_fields(popup_page, log_queue)
                 
                 # ALS LAATSTE: Van/Tot grenzen checken en corrigeren
-                check_and_correct_location_after_full_fill(popup_page, log_queue)
+                check_and_correct_location_after_full_fill(popup_page, task, log_queue)
 
                 for l_msg in log_queue:
                     yield l_msg
