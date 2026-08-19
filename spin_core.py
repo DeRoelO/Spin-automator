@@ -99,11 +99,17 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
             let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
             txt = txt.replace(/<[^>]*>?/gm, '');
             if (!txt) {
-                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]'));
+                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]')).filter(t => t.offsetHeight > 0);
                 for (const t of tips) {
-                    const tTxt = t.innerText ? t.innerText.trim() : '';
-                    if (tTxt.includes('tenminste') || tTxt.includes('maximaal') || tTxt.includes('hoogstens')) {
+                    const tTxt = t.innerText ? t.innerText.trim().toLowerCase() : '';
+                    if (tTxt.includes('van km') && (tTxt.includes('tenminste') || tTxt.includes('maximaal'))) {
                         txt = tTxt; break;
+                    }
+                }
+                if (!txt) {
+                    for (const t of tips) {
+                        const tTxt = t.innerText ? t.innerText.trim().toLowerCase() : '';
+                        if (tTxt.includes('tenminste') || tTxt.includes('maximaal')) { txt = tTxt; break; }
                     }
                 }
             }
@@ -111,22 +117,9 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         }""", "location.fromMeter")
 
         if tooltip_text_from:
-            min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_from)
-            max_match = re.search(r"(?:maximaal|hoogstens)\s+([\d,]+)", tooltip_text_from)
-            corrected_val_from = None
-            
-            try:
-                curr_val = float(str(task['Van km']).replace(',', '.'))
-                min_val = float(min_match.group(1).replace(',', '.')) if min_match else None
-                max_val = float(max_match.group(1).replace(',', '.')) if max_match else None
-                
-                if min_val is not None and max_val is not None:
-                    if curr_val < min_val: corrected_val_from = min_match.group(1)
-                    elif curr_val > max_val: corrected_val_from = max_match.group(1)
-                elif min_match: corrected_val_from = min_match.group(1)
-                elif max_match: corrected_val_from = max_match.group(1)
-            except:
-                corrected_val_from = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
+            min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_from, re.IGNORECASE)
+            max_match = re.search(r"maximaal\s+([\d,]+)", tooltip_text_from, re.IGNORECASE)
+            corrected_val_from = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
                 
             if corrected_val_from:
                 confirm_and_validate_gxt_field(popup, "location.fromMeter", corrected_val_from)
@@ -142,11 +135,17 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
             let txt = inp ? (inp.getAttribute('ext:qtip') || inp.getAttribute('qtip') || inp.title || '') : '';
             txt = txt.replace(/<[^>]*>?/gm, '');
             if (!txt) {
-                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]'));
+                const tips = Array.from(document.querySelectorAll('.x-tip, .x-tip-bd, .x-form-invalid-msg, [role="alert"]')).filter(t => t.offsetHeight > 0);
                 for (const t of tips) {
-                    const tTxt = t.innerText ? t.innerText.trim() : '';
-                    if (tTxt.includes('tenminste') || tTxt.includes('maximaal') || tTxt.includes('hoogstens')) {
+                    const tTxt = t.innerText ? t.innerText.trim().toLowerCase() : '';
+                    if (tTxt.includes('tot km') && (tTxt.includes('tenminste') || tTxt.includes('maximaal'))) {
                         txt = tTxt; break;
+                    }
+                }
+                if (!txt) {
+                    for (const t of tips) {
+                        const tTxt = t.innerText ? t.innerText.trim().toLowerCase() : '';
+                        if (tTxt.includes('tenminste') || tTxt.includes('maximaal')) { txt = tTxt; break; }
                     }
                 }
             }
@@ -154,22 +153,9 @@ def select_gxt_dropdown_option(popup, field_name, target_text=""):
         }""", "location.toMeter")
 
         if tooltip_text_to:
-            min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_to)
-            max_match = re.search(r"(?:maximaal|hoogstens)\s+([\d,]+)", tooltip_text_to)
-            corrected_val_to = None
-            
-            try:
-                curr_val = float(str(task['Tot km']).replace(',', '.'))
-                min_val = float(min_match.group(1).replace(',', '.')) if min_match else None
-                max_val = float(max_match.group(1).replace(',', '.')) if max_match else None
-                
-                if min_val is not None and max_val is not None:
-                    if curr_val < min_val: corrected_val_to = min_match.group(1)
-                    elif curr_val > max_val: corrected_val_to = max_match.group(1)
-                elif min_match: corrected_val_to = min_match.group(1)
-                elif max_match: corrected_val_to = max_match.group(1)
-            except:
-                corrected_val_to = max_match.group(1) if max_match else (min_match.group(1) if min_match else None)
+            min_match = re.search(r"tenminste\s+([\d,]+)", tooltip_text_to, re.IGNORECASE)
+            max_match = re.search(r"maximaal\s+([\d,]+)", tooltip_text_to, re.IGNORECASE)
+            corrected_val_to = min_match.group(1) if min_match else (max_match.group(1) if max_match else None)
                 
             if corrected_val_to:
                 confirm_and_validate_gxt_field(popup, "location.toMeter", corrected_val_to)
