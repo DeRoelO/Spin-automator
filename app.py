@@ -172,9 +172,13 @@ if uploaded_file is not None:
                 ucode = str(row['Unieke code']).strip()
                 if not ucode or ucode == 'nan': continue
                 
-                # Wegnummer (e.g. 12 from 120VWh...)
-                m_weg = re.match(r'^(\d+)', ucode)
-                weg_nr = f"A{m_weg.group(1)}" if m_weg else "Onbekend"
+                # Wegnummer (voorkeur voor kolom 'WEG', anders uit Unieke code)
+                if 'WEG' in row and not pd.isna(row['WEG']):
+                    raw_weg = str(row['WEG']).replace('.0', '').strip()
+                    weg_nr = f"A{raw_weg}" if raw_weg.isdigit() else raw_weg
+                else:
+                    m_weg = re.match(r'^(\d+)', ucode)
+                    weg_nr = f"A{m_weg.group(1)}" if m_weg else "Onbekend"
                 
                 # Zijde (L or R after a dash)
                 m_zijde = re.search(r'-([LR])', ucode)
