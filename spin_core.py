@@ -482,6 +482,12 @@ def run_spin_automation(tasks, config):
                 select_gxt_dropdown_option(popup_page, "trafficHindranceClass", "1 (geen file)")
                 select_gxt_dropdown_option(popup_page, "outsideWorkableHours", "Nee")
 
+                # Open de tabbladen (anders bestaan de knoppen nog niet in de HTML)
+                try:
+                    popup_page.locator("legend:has-text('Afzetting'), .x-fieldset-header:has-text('Afzetting')").first.click(timeout=1000)
+                    safe_wait(popup_page, 200)
+                except: pass
+
                 try:
                     popup_page.locator("input[name='gxt.RadioGroup.3'][value='true']").first.click(timeout=500, force=True)
                     popup_page.locator("input[name='gxt.RadioGroup.4'][value='false']").first.click(timeout=500, force=True)
@@ -490,6 +496,11 @@ def run_spin_automation(tasks, config):
 
                 confirm_and_validate_gxt_field(popup_page, "widthConstraint", "7,00")
                 select_gxt_dropdown_option(popup_page, "roadblockType", "96a-430")
+
+                try:
+                    popup_page.locator("legend:has-text('Kenmerken'), .x-fieldset-header:has-text('Kenmerken')").first.click(timeout=1000)
+                    safe_wait(popup_page, 200)
+                except: pass
 
                 try:
                     popup_page.locator("input[name='gxt.RadioGroup.8'][value='false']").first.click(timeout=500, force=True)
