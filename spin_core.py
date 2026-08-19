@@ -413,35 +413,18 @@ def run_spin_automation(tasks, config):
             page.goto(BASE_URL, wait_until="networkidle")
             time.sleep(2.0)
 
-            # Blijf op 'Ok' klikken (van eventuele waarschuwingen) totdat we écht het wachtwoordveld zien
-            for _ in range(15):
-                pass_input = page.locator("input[type='password']").first
-                if pass_input.is_visible():
-                    break  # Login scherm is bereikt!
-                    
-                buttons = page.query_selector_all("button")
-                for btn in buttons:
-                    if btn.is_visible() and btn.inner_text().strip() == "Ok":
-                        btn.click()
-                        time.sleep(1.0)
-                        break
-                time.sleep(0.5)
+            buttons = page.query_selector_all("button")
+            for btn in buttons:
+                if btn.is_visible() and btn.inner_text().strip() == "Ok":
+                    btn.click()
+                    time.sleep(1.0)
+                    break
 
-            # Nu zijn we zeker weten bij het Inlogvenster
-            name_input = page.locator("input[name='name']").locator("visible=true").first
-            pass_input = page.locator("input[type='password']").locator("visible=true").first
-            
-            name_input.click()
-            name_input.fill("")
-            name_input.type(config['username'], delay=50)
-            
-            pass_input.click()
-            pass_input.fill("")
-            pass_input.type(config['password'], delay=50)
-            pass_input.press("Tab")
-            time.sleep(0.5)
+            name_input = page.locator("input[name='name']").first
+            pass_input = page.locator("input[name='password']").first
+            name_input.fill(config['username'], force=True)
+            pass_input.fill(config['password'], force=True)
 
-            # Klik de Ok knop van het inlogscherm
             buttons = page.query_selector_all("button")
             for btn in buttons:
                 if btn.is_visible() and btn.inner_text().strip() == "Ok":
